@@ -51,7 +51,15 @@ export default function Card({ post }: CardProps) {
                     authorName &&
                     <>
                         <div className='flex-1 flex flex-row'>
-                            <FaUser />
+                      
+                            <img 
+                            src={`https://i.pravatar.cc/25?img=${post.id}`} 
+                            alt={post.title}
+                            sizes="10px"
+                            className="object-cover  rounded-full"
+                            />
+
+                            
                             <p className="text-sm text-gray-500 mb-1">{authorName}</p>
                         </div>
                     </>
