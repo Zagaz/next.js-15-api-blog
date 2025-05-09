@@ -38,6 +38,7 @@ export default function Article({ params }: ArticleProps) {
         const authorRes = await fetch(`https://dummyjson.com/users/${articleData.userId}`);
         const authorData: AuthorData = await authorRes.json();
         setAuthor(authorData);
+        console.table(authorData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -63,7 +64,14 @@ export default function Article({ params }: ArticleProps) {
         ))}
       </div>
       <div>
-        <strong>Author:</strong> {author.firstName} {author.lastName}
+        <img 
+          src={`https://dummyjson.com/icon/${author.id}/50`} 
+          alt={author.firstName} 
+          className="object-cover rounded-full mr-2"
+        />
+      
+        
+         {author.firstName} {author.lastName}
       </div>
     </div>
   );

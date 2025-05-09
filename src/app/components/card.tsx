@@ -51,10 +51,9 @@ export default function Card({ post }: CardProps) {
                     authorName &&
                     <>
                         <div className='flex-1 flex flex-row'>
-                            
 
                             <img
-                                src={`https://i.pravatar.cc/25?img=${post.id}`}
+                                src={`https://dummyjson.com/icon/${authorName}/50`}
                                 alt={post.title}
                                 className="w-[25px] h-[25px] object-cover rounded-full"
                             />
@@ -66,7 +65,7 @@ export default function Card({ post }: CardProps) {
                 }
                 {/* The Title */}
                 <h2 className="text-xl font-semibold mb-2">
-                    <Link href={`article/${post.id}`} className="hover:text-blue-600 transition"> {post.title}</Link>
+                    <Link href={`article/${post.id}`} className="hover:text"> {post.title}</Link>
 
                     </h2>
 
