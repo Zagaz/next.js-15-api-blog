@@ -1,9 +1,70 @@
-import React from 'react'
+'use client';
+import React, { useState, useEffect } from 'react';
 
-export default function Article() {
+type ArticleProps = {
+  params: {
+    articleId: string;
+  };
+};
+
+type ArticleData = {
+  id: number;
+  title: string;
+  body: string;
+  tags: string[];
+  userId: number;
+};
+
+type AuthorData = {
+  id: number;
+  firstName: string;
+  lastName: string;
+};
+
+export default function Article({ params }: ArticleProps) {
+  const { articleId } = params;
+  const [article, setArticle] = useState<ArticleData | null>(null);
+  const [author, setAuthor] = useState<AuthorData | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Fetch article data
+        const articleRes = await fetch(`https://dummyjson.com/posts/${articleId}`);
+        const articleData: ArticleData = await articleRes.json();
+        setArticle(articleData);
+
+        // Fetch author data using userId from article
+        const authorRes = await fetch(`https://dummyjson.com/users/${articleData.userId}`);
+        const authorData: AuthorData = await authorRes.json();
+        setAuthor(authorData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, [articleId]);
+
+  if (!article || !author) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <>
-    <div>The Article|</div>
-    </>
-  )
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-2">{article.title}</h1>
+      <p className="mb-4">{article.body}</p>
+      <div className="mb-4">
+        <strong>Tags:</strong>{' '}
+        {article.tags.map((tag, index) => (
+          <span key={index} className="inline-block text-gray-700 px-2 py-1 rounded-full mr-2">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <div>
+        <strong>Author:</strong> {author.firstName} {author.lastName}
+      </div>
+    </div>
+  );
 }
