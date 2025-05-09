@@ -3,9 +3,10 @@ import React from 'react';
 type CardProps = {
   post: {
     id: number;
+    authorId: number;
     title: string;
-    imageUrl: string;
     tags: string[];
+    imageUrl: string;
   };
 };
 
@@ -22,6 +23,7 @@ export default function Card({ post }: CardProps) {
       </div>
 
       <div className="p-4 flex-1 flex flex-col">
+        <h3>{post.authorId}</h3>
         <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
         <div className="flex flex-wrap gap-2 mb-4">
           {post.tags.map((tag, index) => (
