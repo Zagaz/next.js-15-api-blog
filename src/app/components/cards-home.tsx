@@ -22,9 +22,12 @@ export default function CardsHome({ mainTitle }: CardsHomeProps) {
   useEffect(() => {
     async function fetchApi() {
       try {
+        // Fetch 6 posts
         const apiUrl = "https://dummyjson.com/posts?limit=6";
         const res = await fetch(apiUrl);
         const data = await res.json();
+
+        // Todo: based on> data user Id, fech the author name;
         
         const mappedPosts: BlogCard[] = data.posts.map((post: any) => ({
           id: post.id,
