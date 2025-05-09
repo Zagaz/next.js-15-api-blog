@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Tags from '@/app/components/tags';
 
 type ArticleProps = {
   params: {
@@ -55,14 +56,12 @@ export default function Article({ params }: ArticleProps) {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-2">{article.title}</h1>
       <p className="mb-4">{article.body}</p>
-      <div className="mb-4">
-        <strong>Tags:</strong>{' '}
-        {article.tags.map((tag, index) => (
-          <span key={index} className="inline-block text-gray-700 px-2 py-1 rounded-full mr-2">
-            {tag}
-          </span>
-        ))}
-      </div>
+      
+    
+
+      <Tags post={{ tags: article.tags }} />
+
+
       <div>
         <img 
         //  here
