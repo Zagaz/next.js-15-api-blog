@@ -65,6 +65,7 @@ export default function Article({ params }: ArticleProps) {
       </div>
       <div>
         <img 
+        //  here
           src={`https://dummyjson.com/icon/${author.id}/50`} 
           alt={author.firstName} 
           className="object-cover rounded-full mr-2"
