@@ -74,7 +74,7 @@ export default function Card({ post }: CardProps) {
                 </div>
                 {/* The Button  */}
                 <div className="mt-auto">
-                    <Link href={`/blog/${post.id}`}className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                    <Link href={`article/${post.id}`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                         Read More
                     </Link>
                 </div>

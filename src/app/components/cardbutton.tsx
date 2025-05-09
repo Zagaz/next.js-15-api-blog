@@ -2,15 +2,18 @@
 import Link from 'next/link'
 
 type ButtonProps = {
-    slug: string,
+    href: string,
     value: string
 }
 
 export default function Cardbutton(props: ButtonProps) {
+
+    let slug = props.href.startsWith('/') ? props.href : '/' + props.href;
+
    
     return (
         <>
-            <Link href={props.slug} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            <Link href={slug} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                {props.value}
             </Link>
         </>
