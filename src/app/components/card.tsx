@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { FaUser } from "react-icons/fa6";
+import { IoPricetagsSharp } from "react-icons/io5";
 
 
 type CardProps = {
@@ -51,32 +51,39 @@ export default function Card({ post }: CardProps) {
                     authorName &&
                     <>
                         <div className='flex-1 flex flex-row'>
-                      
-                            <img 
-                            src={`https://i.pravatar.cc/25?img=${post.id}`} 
-                            alt={post.title}
-                            sizes="10px"
-                            className="object-cover  rounded-full"
+                            
+
+                            <img
+                                src={`https://i.pravatar.cc/25?img=${post.id}`}
+                                alt={post.title}
+                                className="w-[25px] h-[25px] object-cover rounded-full"
                             />
 
-                            
+
                             <p className="text-sm text-gray-500 mb-1">{authorName}</p>
                         </div>
                     </>
                 }
                 {/* The Title */}
-                <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
+                <h2 className="text-xl font-semibold mb-2">
+                    <Link href={`article/${post.id}`} className="hover:text-blue-600 transition"> {post.title}</Link>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                    </h2>
+
+                <div className="flex flex-wrap flex-row  gap-2 mb-4">
+                    <IoPricetagsSharp />
                     {
                         post.tags.length > 0 &&
                         post.tags.map((tag, index) => (
+                            <>
                             <span
                                 key={index}
-                                className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full"
+                                className="text-xs  text-gray-700 px-2 rounded-full mb-2"
                             >
                                 {tag}
                             </span>
+                            </>
+                          
                         ))
                     }
                 </div>
