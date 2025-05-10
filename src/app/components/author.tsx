@@ -10,7 +10,7 @@ type AuthorProps = {
 
 export default function Author({ author, id }: AuthorProps) {
   return (
-    <div className="flex flex-row items-center gap-2 flex-nowrap">
+    <div className="author-wrapper flex flex-row items-center gap-2 flex-nowrap">
       <img
         src={`https://dummyjson.com/icon/${id}/50`}
         alt={`${author.firstName} ${author.lastName}`}
