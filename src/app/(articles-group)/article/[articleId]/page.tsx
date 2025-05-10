@@ -38,6 +38,8 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
   const [article, setArticle] = useState<ArticleData | null>(null);
   const [author, setAuthor] = useState<AuthorData | null>(null);
   const [comments, setComments] = useState<CommentsData | null>(null);
+  const [skip, setSkip] = useState<number>(6);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -50,7 +52,7 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
         const authorData: AuthorData = await authorRes.json();
         setAuthor(authorData);
 
-        const commentsRes = await fetch(`https://dummyjson.com/comments?postId=${articleId}&limit=6&skip=0`);
+        const commentsRes = await fetch(`https://dummyjson.com/comments?postId=${articleId}&limit=6&skip=${skip}`);
         const commentsData: CommentsData = await commentsRes.json();
         console.log(commentsData);
         setComments(commentsData);
@@ -60,10 +62,14 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
     }
 
     fetchData();
-  }, [articleId]);
+  }, [articleId , skip]);
+
 
   if (!article || !author) {
     return <div>Loading...</div>;
+  }
+  function handleSkip () {
+    setSkip(skip + 6);
   }
 
   return (
@@ -97,6 +103,10 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
         </ul>
         <hr />
       </div>
+      <div className="article-comments p-4">
+        <button onClick={handleSkip}>Load More</button>
+      </div>
+
     </div>
   );
 }
