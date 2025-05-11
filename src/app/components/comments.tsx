@@ -2,7 +2,6 @@
 'use client';
 import React from 'react';
 import { BiLike } from 'react-icons/bi';
-import {FadeLoader  } from "react-spinners";
 import AvatarWithLoader from './avatarwithloader';
 
 type Comment = {
@@ -35,16 +34,12 @@ export default function Comments({ comments, total, onLoadMore }: CommentsProps)
           >
             <div className="flex items-center gap-3 mb-2">
 
-             {/* async load image or <Spinner >    */}
+              {/* async load image or <Spinner >    */}
               <AvatarWithLoader
-  src={`https://picsum.photos/seed/${comment.user.id}/50`}
-  alt={comment.user.fullName}
-  className="w-10 h-10 object-cover rounded-full"
-/>
-
-
-
-
+                src={`https://picsum.photos/seed/${comment.user.id}/50`}
+                alt={comment.user.fullName}
+                className="w-10 h-10 object-cover rounded-full"
+              />
               <span className="font-medium text-gray-800">{comment.user.fullName}</span>
             </div>
             <p className="text-gray-700 mb-3 leading-relaxed">{comment.body}</p>
