@@ -8,6 +8,7 @@ type AuthorData = {
   firstName: string;
   lastName: string;
   email: string;
+  image: string;
   address:{
     city:string
     stateCode:string
@@ -56,8 +57,9 @@ export default function AuthorId({
   <div className="max-w-sm mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
     {/* Header */}
     <div>
+      <img src={author?.image} />
       <h2 className="text-2xl font-semibold text-gray-800">Author Profile</h2>
-      <p className="text-sm text-gray-500">Author ID: {authorId}</p>
+    
     </div>
 
     {/* Author Info */}
