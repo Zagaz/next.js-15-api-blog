@@ -51,28 +51,38 @@ export default function AuthorId({
 
   // JSX rendering
   return (
-    <>
-      {/* Display the author ID */}
-      <div>BlogId: {authorId}</div>
 
-      {/* Display the author name if data has been loaded */}
-      <div>
+<>
+  <div className="max-w-sm mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
+    {/* Header */}
+    <div>
+      <h2 className="text-2xl font-semibold text-gray-800">Author Profile</h2>
+      <p className="text-sm text-gray-500">Author ID: {authorId}</p>
+    </div>
+
+    {/* Author Info */}
+    <div>
+      <p className="text-lg font-medium text-gray-700">
         {author?.firstName} {author?.lastName}
+      </p>
+      <p className="text-sm text-gray-500">{author?.email}</p>
+    </div>
 
-      </div>
-      <div>
-        {author?.email}
-      </div>
-      <div>
-        {author?.address?.city}
-      </div>
-      <div>
-        {author?.address?.stateCode}
-      </div>
-      <div>
-        {author?.address?.country}
-      </div>
+    {/* Address as list */}
+    <div className="w-full">
+      <h3 className="text-sm font-semibold text-gray-600 mb-2">Location</h3>
+      <ul role="list" className="flex flex-col gap-1 text-gray-700 text-sm">
+        {author?.address?.city && <li role="listitem">City: {author.address.city}</li>}
+        {author?.address?.stateCode && <li role="listitem">State: {author.address.stateCode}</li>}
+        {author?.address?.country && <li role="listitem">Country: {author.address.country}</li>}
+      </ul>
+    </div>
+  </div>
+</>
 
-    </>
+
+
+
+
   );
 }
