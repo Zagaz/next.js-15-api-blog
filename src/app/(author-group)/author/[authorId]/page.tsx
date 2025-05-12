@@ -1,6 +1,7 @@
 'use client'; // This makes the component run on the client-side
 
 import { useState, useEffect } from 'react';
+import Spinner  from '@/app/components/spinner';
 
 // Define the type structure for the author data
 type AuthorData = {
@@ -53,6 +54,15 @@ export default function AuthorId({
 
     fetchAuthor();
   }, [authorId]);
+
+  if (!author) {
+    return <div><Spinner /></div>;
+  }
+
+  if (!posts) {
+    return <div>Loading...</div>;
+  }
+
 
   return (
     <>
