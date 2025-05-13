@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Spinner from '@/app/components/spinner'; // Assuming the Spinner component is imported from a file
 import Tags from '@/app/components/tags'; // Assuming Tags component is imported from a file
 
+
 type Post = {
   id: number;
   title: string;
@@ -19,7 +20,7 @@ type PostListProps = {
   author: Author;
 };
 
-const PostList = ({ posts, author }: PostListProps) => {
+const AuthorPostList = ({ posts, author }: PostListProps) => {
   return (
     <>
       <div className="space-y-6 w-full">
@@ -69,4 +70,4 @@ const PostList = ({ posts, author }: PostListProps) => {
   );
 };
 
-export default PostList;
+export default AuthorPostList;

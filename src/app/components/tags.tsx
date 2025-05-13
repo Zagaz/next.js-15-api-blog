@@ -20,7 +20,7 @@ export default function Tags({ post }: TagsProps) {
                     <span
                         key={index}
                         className="text-xs text-gray-700  px-2 py-1 rounded-full text-xs uppercase text-gray-500 tracking-wide">
-                        <Link href={`/tag/${tag}`} className={`hover:text-blue-600 transition`}>
+                        <Link href={`/tags/${tag}`} className={`hover:text-blue-600 transition`}>
                         {tag}  
                         </Link>
                    </span>

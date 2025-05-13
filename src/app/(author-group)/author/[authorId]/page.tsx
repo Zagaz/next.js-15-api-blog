@@ -1,5 +1,5 @@
 import AuthorInfo from '@/app/components/author/author-info';
-import PostList from '@/app/components/author/postlist';
+import PostList from '@/app/components/postlist';
 import { redirect } from 'next/navigation';
 
 type AuthorData = {
