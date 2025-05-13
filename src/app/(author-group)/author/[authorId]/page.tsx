@@ -1,14 +1,6 @@
-'use client';
-import { use, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Spinner from '@/app/components/spinner';
-import { FaLocationDot } from "react-icons/fa6";
-import { PiBuildingApartment } from "react-icons/pi";
-import Link from 'next/link';
-import Tags from '@/app/components/tags';
-import AuthorInfo from '@/app/components/author-info';
-import PostList from '@/app/components/postlist';
-
+import AuthorInfo from '@/app/components/author/author-info';
+import PostList from '@/app/components/author/postlist';
+import { redirect } from 'next/navigation';
 
 type AuthorData = {
   id: number;
@@ -36,57 +28,30 @@ type Post = {
   views: number;
 };
 
-export default function AuthorId({
-  params,
-}: {
-  params: Promise<{ authorId: string }>;
-}) {
-  const { authorId } = use(params); // unwrap params
-  const router = useRouter(); // initialize router
+export default async function AuthorPage({ params }: { params: { authorId: string } }) {
+  const { authorId } = params;
 
-  const [author, setAuthor] = useState<AuthorData | null>(null);
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  try {
+    const [userRes, postsRes] = await Promise.all([
+      fetch(`https://dummyjson.com/users/${authorId}`),
+      fetch(`https://dummyjson.com/users/${authorId}/posts`)
+    ]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const [userRes, postsRes] = await Promise.all([
-          fetch(`https://dummyjson.com/users/${authorId}`),
-          fetch(`https://dummyjson.com/users/${authorId}/posts`)
-        ]);
-
-        if (!userRes.ok) {
-          router.push('/'); // Fix: Call not found page
-          return;
-        }
-
-        const userData = await userRes.json();
-        const postsData = await postsRes.json();
-
-        setAuthor(userData);
-        setPosts(postsData.posts || []);
-      } catch (error) {
-        console.error('Error fetching author or posts:', error);
-        router.push('/'); // redirect on general error
-      } finally {
-        setLoading(false);
-      }
+    if (!userRes.ok || !postsRes.ok) {
+      redirect('/');
     }
 
-    fetchData();
-  }, [authorId, router]);
+    const author: AuthorData = await userRes.json();
+    const { posts }: { posts: Post[] } = await postsRes.json();
 
-  if (loading) {
-    return <div><Spinner /></div>;
+    return (
+      <div className="author-wrapper w-full md:w-3/6 mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
+        <AuthorInfo author={author} />
+        <PostList posts={posts} author={author} />
+      </div>
+    );
+  } catch (error) {
+    console.error('Failed to load author:', error);
+    redirect('/');
   }
-
-  if (!author) return null;
-
-  return (
-    <div className="author-wrapper w-full md:w-3/6 mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
-      <AuthorInfo author={author} />
-      <PostList posts={posts} author={author} />
-    </div>
-  );
 }
