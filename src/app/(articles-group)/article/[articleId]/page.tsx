@@ -6,6 +6,7 @@ import Author from '@/app/components/author';
 import Comments from '@/app/components/comments';
 import { BiLike } from "react-icons/bi";
 import Spinner from '@/app/components/spinner';
+import Link from 'next/link';
 
 
 type ArticleData = {
@@ -98,7 +99,9 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
   </div>
 
   <div className="article-author mb-8">
+    <Link href={`/author/${author.id}`}>
     <Author author={author} id={author.id} />
+    </Link>
   </div>
 
   <div className="article-comments">
