@@ -18,7 +18,7 @@ export default function Tags({ post }: TagsProps) {
                 {post.tags.map((tag, index) => (
                     <span
                         key={index}
-                        className="text-xs text-gray-700  px-2 py-1 rounded-full"
+                        className="text-xs text-gray-700  px-2 py-1 rounded-full text-xs uppercase text-gray-500 tracking-wide"
                     >
                         {tag}
                     </span>

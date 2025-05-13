@@ -79,11 +79,6 @@ export default function AuthorId({
     <>
 
       <div className="author-wrapper w-full md:w-3/6 mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
-
-
-
-
-
         <div className="w-full max-w-4xl mx-auto bg-white rounded-xl p-8 shadow-md flex flex-col items-center text-center gap-4">
 
           {/* Author Image */}
@@ -112,22 +107,18 @@ export default function AuthorId({
           <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
             <MdWorkOutline className="text-2xl text-purple-600" />
             <div className='text-2xl'>
-            {author?.company?.name && <span>{author.company.name}</span>}
-            {author?.company?.title && <span>- {author.company.title}</span>}    
+              {author?.company?.name && <span>{author.company.name}</span>}
+              {author?.company?.title && <span>- {author.company.title}</span>}
             </div>
-
           </div>
         </div>
-
-
 
         {/* Author's Posts */}
         <div className="mt-8 w-full">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">
             Posts by {author?.firstName}
           </h3>
-
-
+          
           <div className="space-y-6">
             {posts.length > 0 ? (
               posts.map((post) => (
@@ -135,26 +126,30 @@ export default function AuthorId({
                   key={post.id}
                   className="flex max-w-xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300"
                 >
-                  <Link href={`/article/${post.id}`} className="flex flex-row w-full no-underline">
-                    <img
+                  <div className="flex flex-row w-full no-underline">
+                    <Link href={`/article/${post.id}`}> 
+                    
+                    <img className = "w-full object-cover h-full"
                       src={`https://picsum.photos/seed/post${post.id}/120/120`}
                       alt={`Thumbnail for ${post.title}`}
-                      className="w-1/3 object-cover"
                     />
+                    </Link>
                     <div className="p-4 flex flex-col justify-between w-2/3">
                       <div>
-                        <span className="text-xs uppercase text-gray-500 tracking-wide">
+                        <span>
 
                           <Tags post={{ tags: post.tags }} />
                         </span>
+                        <Link href={`/article/${post.id}`}> 
                         <h3 className="text-lg font-semibold text-gray-900 leading-tight mt-1 line-clamp-1">
                           {post.title}
                         </h3>
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.body}</p>
-                      </div>
                       <div className="mt-2 text-xs text-gray-500"> {`By ${author?.firstName} ${author?.lastName} `}</div>
+                        </Link>
+                      </div>
                     </div>
-                  </Link>
+                  </div>
                 </div>
               ))
             ) : (
