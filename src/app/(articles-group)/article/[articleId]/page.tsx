@@ -90,7 +90,7 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
   className="w-full rounded-lg object-cover"
 />
 
-    <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+    <h1 className="text-3xl font-bold mb-4 uppercase">{article.title}</h1>
     <p className="text-gray-700 leading-relaxed">{article.body}</p>
   </div>
 

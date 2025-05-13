@@ -60,8 +60,8 @@ export default function Card({ post }: CardProps) {
         )}
 
         {/* Title */}
-        <h2 className="text-xl font-semibold mb-2">
-          <Link href={`article/${post.id}`} className="hover:text-blue-600">
+        <h2 className="text-xl font-semibold mb-2 ">
+          <Link href={`article/${post.id}`} className="uppercase hover:text-blue-600">
             {post.title}
           </Link>
         </h2>

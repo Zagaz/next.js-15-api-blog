@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Spinner from '@/app/components/spinner';
 import { FaLocationDot } from "react-icons/fa6";
-import { MdWorkOutline } from "react-icons/md";
+import { PiBuildingApartment } from "react-icons/pi";
 import Link from 'next/link';
 import Tags from '@/app/components/tags';
 
@@ -105,7 +105,7 @@ export default function AuthorId({
 
           {/* Work Info */}
           <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
-            <MdWorkOutline className="text-2xl text-purple-600" />
+            <PiBuildingApartment  className="text-2xl text-purple-600"  />
             <div className='text-2xl'>
               {author?.company?.name && <span>{author.company.name}</span>}
               {author?.company?.title && <span>- {author.company.title}</span>}
