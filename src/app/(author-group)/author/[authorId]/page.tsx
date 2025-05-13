@@ -80,38 +80,45 @@ export default function AuthorId({
 
       <div className="author-wrapper w-full md:w-3/6 mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
 
-        {/* Author Info */}
-        <div className="author-profile w-full flex flex-col items-center gap-4">
+
+
+
+
+        <div className="w-full max-w-4xl mx-auto bg-white rounded-xl p-8 shadow-md flex flex-col items-center text-center gap-4">
+
+          {/* Author Image */}
           <img
             src={author?.image}
             alt="Author"
-            className="w-24 h-24 rounded-full object-cover"
+            className="w-28 h-28 rounded-full object-cover shadow"
           />
-          <h2 className="text-2xl font-semibold text-gray-800">
+
+          {/* Name */}
+          <h1 className="text-4xl md:text-3xl font-bold text-gray-800">
             {author?.firstName} {author?.lastName}
-          </h2>
+          </h1>
 
-        </div>
+          {/* Location Info */}
+          <div className="flex text-4xl items-center justify-center gap-2 text-gray-600 text-sm">
+            <FaLocationDot className="text-purple-600 text-2xl" />
+            <div className='text-2xl'>
+              {author?.address?.city && <span >{author.address.city}</span>}
+              {author?.address?.stateCode && <span>- {author.address.stateCode}</span>}
+              {author?.address?.country && <span>- {author.address.country}</span>}
+            </div>
+          </div>
 
-        {/* Address Info */}
-        <div className="w-full text-center">
+          {/* Work Info */}
+          <div className="flex items-center justify-center gap-2 text-gray-600 text-sm">
+            <MdWorkOutline className="text-2xl text-purple-600" />
+            <div className='text-2xl'>
+            {author?.company?.name && <span>{author.company.name}</span>}
+            {author?.company?.title && <span>- {author.company.title}</span>}    
+            </div>
 
-          <div role="list" className="flex flex-row items-center justify-center gap-1 text-gray-700 text-sm">
-            <FaLocationDot />
-            {author?.address?.city && <div role="listitem">{author.address.city}</div>}
-            {author?.address?.stateCode && <div role="listitem">- {author.address.stateCode}</div>}
-            {author?.address?.country && <div role="listitem">- {author.address.country}</div>}
           </div>
         </div>
-        {/* Work info  */}
-    <div className="w-full text-center">
 
-          <div role="list" className="flex flex-row items-center justify-center gap-1 text-gray-700 text-sm">
-            <MdWorkOutline />
-            {author?.company?.name && <div role="listitem">{author.company.name}</div>}
-            {author?.company?.title && <div role="listitem">- {author.company.title}</div>}
-          </div>
-        </div>
 
 
         {/* Author's Posts */}
@@ -122,38 +129,38 @@ export default function AuthorId({
 
 
           <div className="space-y-6">
-  {posts.length > 0 ? (
-    posts.map((post) => (
-      <div
-        key={post.id}
-        className="flex max-w-xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300"
-      >
-        <Link href={`/article/${post.id}`} className="flex flex-row w-full no-underline">
-          <img
-            src={`https://picsum.photos/seed/post${post.id}/120/120`}
-            alt={`Thumbnail for ${post.title}`}
-            className="w-1/3 object-cover"
-          />
-          <div className="p-4 flex flex-col justify-between w-2/3">
-            <div>
-              <span className="text-xs uppercase text-gray-500 tracking-wide">
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <div
+                  key={post.id}
+                  className="flex max-w-xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300"
+                >
+                  <Link href={`/article/${post.id}`} className="flex flex-row w-full no-underline">
+                    <img
+                      src={`https://picsum.photos/seed/post${post.id}/120/120`}
+                      alt={`Thumbnail for ${post.title}`}
+                      className="w-1/3 object-cover"
+                    />
+                    <div className="p-4 flex flex-col justify-between w-2/3">
+                      <div>
+                        <span className="text-xs uppercase text-gray-500 tracking-wide">
 
-              <Tags post={{ tags: post.tags }} />
-              </span>
-              <h3 className="text-lg font-semibold text-gray-900 leading-tight mt-1 line-clamp-1">
-                {post.title}
-              </h3>
-              <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.body}</p>
-            </div>
-            <div className="mt-2 text-xs text-gray-500"> {`By ${author?.firstName} ${author?.lastName} `}</div>
+                          <Tags post={{ tags: post.tags }} />
+                        </span>
+                        <h3 className="text-lg font-semibold text-gray-900 leading-tight mt-1 line-clamp-1">
+                          {post.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.body}</p>
+                      </div>
+                      <div className="mt-2 text-xs text-gray-500"> {`By ${author?.firstName} ${author?.lastName} `}</div>
+                    </div>
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-gray-500 text-center">No posts found.</p>
+            )}
           </div>
-        </Link>
-      </div>
-    ))
-  ) : (
-    <p className="text-sm text-gray-500 text-center">No posts found.</p>
-  )}
-</div>
 
 
 
