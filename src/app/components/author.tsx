@@ -1,4 +1,5 @@
 import React from 'react'
+import Spinner from './spinner';
 
 type AuthorProps = {
   author: {
@@ -11,12 +12,20 @@ type AuthorProps = {
 export default function Author({ author, id }: AuthorProps) {
   return (
     <div className="author-wrapper flex flex-row items-center gap-2 flex-nowrap">
-      <img
-        src={`https://dummyjson.com/icon/${id}/50`}
-        alt={`${author.firstName} ${author.lastName}`}
-        className="w-10 h-10 object-cover rounded-full"
-      />
-      <span className="text-sm">{author.firstName} {author.lastName}</span>
-    </div>
+
+{
+  !id ? <><Spinner /> </>:<>
+  <img
+    src={`https://dummyjson.com/icon/${id}/50`}
+    alt={`${author.firstName} ${author.lastName}`}
+    className="w-10 h-10 object-cover rounded-full"
+  />
+  
+  </>
+  
+}
+  <span className="text-sm">{author.firstName} {author.lastName}</span>
+</div>
+
   );
 }
