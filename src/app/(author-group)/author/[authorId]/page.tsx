@@ -1,7 +1,12 @@
 'use client'; // This makes the component run on the client-side
 
 import { useState, useEffect } from 'react';
-import Spinner  from '@/app/components/spinner';
+import Spinner from '@/app/components/spinner';
+import { FaLocationDot } from "react-icons/fa6";
+import { MdWorkOutline } from "react-icons/md";
+import Link from 'next/link';
+import Tags from '@/app/components/tags';
+
 
 // Define the type structure for the author data
 type AuthorData = {
@@ -15,6 +20,10 @@ type AuthorData = {
     stateCode: string;
     country: string;
   };
+  company: {
+    name: string
+    title: string
+  }
 };
 
 type Post = {
@@ -37,12 +46,14 @@ export default function AuthorId({
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    async function fetchAuthor() {
+    async function fetchData() {
       try {
-        const userRes = await fetch(`https://dummyjson.com/users/${authorId}`);
-        const userData = await userRes.json();
+        const [userRes, postsRes] = await Promise.all([
+          fetch(`https://dummyjson.com/users/${authorId}`),
+          fetch(`https://dummyjson.com/users/${authorId}/posts`)
+        ]);
 
-        const postsRes = await fetch(`https://dummyjson.com/posts/user/${authorId}`);
+        const userData = await userRes.json();
         const postsData = await postsRes.json();
 
         setAuthor(userData);
@@ -52,7 +63,7 @@ export default function AuthorId({
       }
     }
 
-    fetchAuthor();
+    fetchData();
   }, [authorId]);
 
   if (!author) {
@@ -60,66 +71,95 @@ export default function AuthorId({
   }
 
   if (!posts) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
 
   return (
     <>
-    
-    <div className="author-wrapper max-w-sm mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
-      {/* Author Info */}
-      <div className="author-profile w-full flex flex-col items-center gap-4">
-        <img
-          src={author?.image}
-          alt="Author"
-          className="w-24 h-24 rounded-full object-cover"
-        />
-        <h2 className="text-2xl font-semibold text-gray-800">
-          {author?.firstName} {author?.lastName}
-        </h2>
-        <p className="text-sm text-gray-500">{author?.email}</p>
-      </div>
 
-      {/* Address Info */}
-      <div className="w-full">
-        <h3 className="text-sm font-semibold text-gray-600 mb-2">Location</h3>
-        <ul role="list" className="flex flex-col gap-1 text-gray-700 text-sm">
-          {author?.address?.city && <li role="listitem">City: {author.address.city}</li>}
-          {author?.address?.stateCode && <li role="listitem">State: {author.address.stateCode}</li>}
-          {author?.address?.country && <li role="listitem">Country: {author.address.country}</li>}
-        </ul>
-      </div>
+      <div className="author-wrapper w-full md:w-3/6 mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4 items-start border border-gray-100">
 
-      {/* Author's Posts */}
-      <div className="mt-8 w-full">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">
-          Posts by {author?.firstName}
-        </h3>
-        <ul className="space-y-4">
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <li
-                key={post.id}
-                className="flex items-center bg-white rounded-lg shadow p-4 gap-4 hover:bg-gray-50 transition"
-              >
-                <img
-                  src={`https://picsum.photos/seed/post${post.id}/80/80`}
-                  alt={`Thumbnail for ${post.title}`}
-                  className="w-20 h-20 object-cover rounded-md"
-                />
-                <div className="flex-1">
-                  <h4 className="text-md font-bold text-gray-900 line-clamp-1">{post.title}</h4>
-                  <p className="text-sm text-gray-600 line-clamp-2">{post.body}</p>
-                </div>
-              </li>
-            ))
-          ) : (
-            <p className="text-sm text-gray-500">No posts found.</p>
-          )}
-        </ul>
+        {/* Author Info */}
+        <div className="author-profile w-full flex flex-col items-center gap-4">
+          <img
+            src={author?.image}
+            alt="Author"
+            className="w-24 h-24 rounded-full object-cover"
+          />
+          <h2 className="text-2xl font-semibold text-gray-800">
+            {author?.firstName} {author?.lastName}
+          </h2>
+
+        </div>
+
+        {/* Address Info */}
+        <div className="w-full text-center">
+
+          <div role="list" className="flex flex-row items-center justify-center gap-1 text-gray-700 text-sm">
+            <FaLocationDot />
+            {author?.address?.city && <div role="listitem">{author.address.city}</div>}
+            {author?.address?.stateCode && <div role="listitem">- {author.address.stateCode}</div>}
+            {author?.address?.country && <div role="listitem">- {author.address.country}</div>}
+          </div>
+        </div>
+        {/* Work info  */}
+    <div className="w-full text-center">
+
+          <div role="list" className="flex flex-row items-center justify-center gap-1 text-gray-700 text-sm">
+            <MdWorkOutline />
+            {author?.company?.name && <div role="listitem">{author.company.name}</div>}
+            {author?.company?.title && <div role="listitem">- {author.company.title}</div>}
+          </div>
+        </div>
+
+
+        {/* Author's Posts */}
+        <div className="mt-8 w-full">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            Posts by {author?.firstName}
+          </h3>
+
+
+          <div className="space-y-6">
+  {posts.length > 0 ? (
+    posts.map((post) => (
+      <div
+        key={post.id}
+        className="flex max-w-xl mx-auto bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300"
+      >
+        <Link href={`/article/${post.id}`} className="flex flex-row w-full no-underline">
+          <img
+            src={`https://picsum.photos/seed/post${post.id}/120/120`}
+            alt={`Thumbnail for ${post.title}`}
+            className="w-1/3 object-cover"
+          />
+          <div className="p-4 flex flex-col justify-between w-2/3">
+            <div>
+              <span className="text-xs uppercase text-gray-500 tracking-wide">
+
+              <Tags post={{ tags: post.tags }} />
+              </span>
+              <h3 className="text-lg font-semibold text-gray-900 leading-tight mt-1 line-clamp-1">
+                {post.title}
+              </h3>
+              <p className="text-sm text-gray-600 mt-1 line-clamp-2">{post.body}</p>
+            </div>
+            <div className="mt-2 text-xs text-gray-500"> {`By ${author?.firstName} ${author?.lastName} `}</div>
+          </div>
+        </Link>
       </div>
-    </div>
+    ))
+  ) : (
+    <p className="text-sm text-gray-500 text-center">No posts found.</p>
+  )}
+</div>
+
+
+
+
+        </div>
+      </div>
     </>
   );
 }
