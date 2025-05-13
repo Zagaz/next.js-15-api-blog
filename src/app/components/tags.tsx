@@ -1,5 +1,6 @@
 import React from 'react'
 import { IoPricetagsSharp } from "react-icons/io5";
+import Link from 'next/link';
 
 type TagsProps = {
     post:
@@ -18,10 +19,11 @@ export default function Tags({ post }: TagsProps) {
                 {post.tags.map((tag, index) => (
                     <span
                         key={index}
-                        className="text-xs text-gray-700  px-2 py-1 rounded-full text-xs uppercase text-gray-500 tracking-wide"
-                    >
-                        {tag}
-                    </span>
+                        className="text-xs text-gray-700  px-2 py-1 rounded-full text-xs uppercase text-gray-500 tracking-wide">
+                        <Link href={`/tag/${tag}`} className={`hover:text-blue-600 transition`}>
+                        {tag}  
+                        </Link>
+                   </span>
                 ))}
             </div>
         </>
