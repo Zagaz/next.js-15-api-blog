@@ -6,6 +6,7 @@ import Author from '@/app/components/author';
 import Comments from '@/app/components/comments';
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
+import { BsEye } from "react-icons/bs";
 import Spinner from '@/app/components/spinner';
 import Link from 'next/link';
 
@@ -100,6 +101,7 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
           <div className="flex w-full flex justify-end items-center gap-6">
             <div className=' flex justify-start items-center gap-2 text-2xl '> <BiLike />{article.reactions.likes} </div>
             <div className='flex justify-start items-center gap-2 text-2xl'><BiDislike />  {article.reactions.dislikes} </div>
+            <div className='flex justify-start items-center gap-2 text-2xl'><BsEye />  {article.views} </div>
           </div>
         </div>
         <h1 className="text-3xl font-bold mb-4 uppercase">{article.title}</h1>
