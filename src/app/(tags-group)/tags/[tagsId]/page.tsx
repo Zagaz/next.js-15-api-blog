@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Author from '@/app/components/author';
 import Tags from '@/app/components/tags';
 import Spinner from '@/app/components/spinner';
+import Link from 'next/link';
+import Pagination from '@/app/components/paginator';
 
 type Post = {
   id: number;
@@ -25,14 +27,17 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
   const { tagsId } = params;
 
   const [posts, setPosts] = useState<PostWithAuthor[]>([]);
+  const [total, setTotal] = useState(0);
+  const [skip, setSkip] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchPostsAndAuthors() {
       try {
-        const postRes = await fetch(`https://dummyjson.com/posts/tag/${tagsId}?limit=6&skip=0`);
+        const postRes = await fetch(`https://dummyjson.com/posts/tag/${tagsId}?limit=6&skip=${skip}`);
         const postData = await postRes.json();
         const posts: Post[] = postData.posts || [];
+        setTotal(postData.total || posts.length);
 
         const postsWithAuthors: PostWithAuthor[] = await Promise.all(
           posts.map(async (post) => {
@@ -41,6 +46,8 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
             return { ...post, author: authorData };
           })
         );
+
+
 
         setPosts(postsWithAuthors);
       } catch (error) {
@@ -51,11 +58,31 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
     }
 
     fetchPostsAndAuthors();
-  }, [tagsId]);
+  }, [tagsId, skip]);
+
+  function skipHandler() {
+    setSkip(skip => skip + 6);
+  }
 
   return (
     <div className="tag-wrapper w-full max-w-7xl mx-auto mt-10 px-4">
-      <h2 className="text-2xl font-bold uppercase mb-6">Tag: {tagsId}</h2>
+      <h2 className="text-2xl font-bold uppercase mb-2">Tag: {tagsId}</h2>
+      {!loading && (
+        <>
+          <h3 className="text-base mb-6 text-gray-600">
+            {/* Fix - Instead of the length - show post.length * page */}
+             These are the {skip + 1} to {skip + posts.length} of {total} posts with this tag.
+          </h3>
+
+          <Pagination
+            total={total}
+            limit={6}
+            skip={skip}
+            onPageChange={(newSkip) => setSkip(newSkip)}
+          />
+        </>
+
+      )}
 
       {loading ? (
         <Spinner />
@@ -64,14 +91,18 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
           {posts.map((post) => (
             <div key={post.id} className="bg-white shadow-md rounded-2xl p-4 flex flex-col gap-3 border border-gray-100">
               <div className="w-full aspect-[4/3] relative rounded-lg overflow-hidden">
-                <img
-                  src={`https://picsum.photos/seed/${post.id}/600/300`}
-                  alt={post.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                <Link href={`/article/${post.id}`}>
+                  <img
+                    src={`https://picsum.photos/seed/${post.id}/600/300`}
+                    alt={post.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </Link>
               </div>
 
-              <h3 className="text-lg font-semibold uppercase">{post.title}</h3>
+              <Link href={`/article/${post.id}`} className="hover:text-blue-600 transition">
+                <h3 className="text-lg font-semibold uppercase">{post.title}</h3>
+              </Link>
 
               <Author id={post.userId} author={post.author} />
 
