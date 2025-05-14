@@ -93,16 +93,16 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
         <img
           src={`https://picsum.photos/seed/${article.id}/300/200`}
           alt={article.title}
-          className="w-full rounded-lg object-cover mb-4 "
+          className="w-full rounded-lg object-cover mb-6 "
         />
 
-        <h1 className="text-3xl font-bold mb-4 uppercase">{article.title}</h1>
         <div className='likes-dislikesflex items-center justify-between mt-4 mb-4'>
           <div className="flex w-full flex justify-end items-center gap-6">
             <div className=' flex justify-start items-center gap-2 text-2xl '> <BiLike />{article.reactions.likes} </div>
             <div className='flex justify-start items-center gap-2 text-2xl'><BiDislike />  {article.reactions.dislikes} </div>
           </div>
         </div>
+        <h1 className="text-3xl font-bold mb-4 uppercase">{article.title}</h1>
         <p className="text-gray-700 leading-relaxed">{article.body}</p>
       </div>
 
