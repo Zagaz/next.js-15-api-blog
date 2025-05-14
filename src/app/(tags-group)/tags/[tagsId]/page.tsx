@@ -109,11 +109,33 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
               <p className="text-sm text-gray-700 line-clamp-2">{post.body}</p>
 
               <Tags post={post} />
+             
             </div>
+            
           ))}
+
+          
         </div>
       ) : (
         <p>Sorry. No post found with this tag.</p>
+      )}
+
+
+        {!loading && (
+        <>
+          <h3 className="text-base mb-6 text-gray-600">
+            {/* Fix - Instead of the length - show post.length * page */}
+             These are the {skip + 1} to {skip + posts.length} of {total} posts with this tag.
+          </h3>
+
+          <Pagination
+            total={total}
+            limit={6}
+            skip={skip}
+            onPageChange={(newSkip) => setSkip(newSkip)}
+          />
+        </>
+
       )}
     </div>
   );

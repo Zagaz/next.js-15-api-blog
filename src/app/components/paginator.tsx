@@ -53,7 +53,7 @@ export default function Pagination({ total, limit, skip, onPageChange }: Paginat
   };
 
   return (
-    <div className="flex items-center gap-2 mt-6 flex-wrap">
+    <div className="flex items-center gap-2 mt-6 flex-wrap m-4">
       <button
         onClick={() => goToPage(1)}
         disabled={currentPage === 1}
