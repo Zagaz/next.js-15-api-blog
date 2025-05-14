@@ -1,8 +1,14 @@
 'use client';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { IoPricetagsSharp } from "react-icons/io5";
 import Tags from '@/app/components/tags';
+import Author from './author';
+
+type AuthorData = {
+  id: number;
+  firstName: string;
+  lastName: string;
+};
 
 type CardProps = {
   post: {
@@ -15,7 +21,7 @@ type CardProps = {
 };
 
 export default function Card({ post }: CardProps) {
-  const [authorName, setAuthorName] = useState<string>("");
+  const [author, setAuthor] = useState<AuthorData | null>(null);
 
   useEffect(() => {
     async function fetchAuthor() {
@@ -24,10 +30,14 @@ export default function Card({ post }: CardProps) {
         const apiUrl = `https://dummyjson.com/users/${post.authorId}`;
         const res = await fetch(apiUrl);
         const data = await res.json();
-        setAuthorName(`${data.firstName} ${data.lastName}`);
+        setAuthor({
+          id: data.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        });
       } catch (error) {
         console.error("Error fetching author:", error);
-        setAuthorName("Unknown Author");
+        setAuthor(null);
       }
     }
 
@@ -48,19 +58,13 @@ export default function Card({ post }: CardProps) {
 
       {/* Content */}
       <div className="p-4 flex-1 flex flex-col">
-        {authorName && (
-          <div className="flex items-center gap-2 mb-2">
-            <img
-              src={`https://dummyjson.com/icon/${post.authorId}/50`}
-              alt={authorName}
-              className="w-[25px] h-[25px] object-cover rounded-full"
-            />
-            <p className="text-sm text-gray-500">{authorName}</p>
-          </div>
+        {author && (
+          // Author component with full author data
+          <Author author={author} id={author.id} />
         )}
 
         {/* Title */}
-        <h2 className="text-xl font-semibold mb-2 ">
+        <h2 className="text-xl font-semibold mb-2">
           <Link href={`article/${post.id}`} className="uppercase hover:text-blue-600">
             {post.title}
           </Link>

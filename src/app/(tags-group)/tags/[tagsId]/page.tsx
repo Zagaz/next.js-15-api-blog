@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Author from '@/app/components/author';
 import Tags from '@/app/components/tags';
+import Spinner from '@/app/components/spinner';
+
 
 type Post = {
   id: number;
@@ -59,17 +61,20 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
       <h2 className="text-2xl font-bold uppercase mb-4">Tag: {tagsId}</h2>
 
       {loading ? (
-        <p>Carregando...</p>
+        <>
+          <Spinner />
+        
+        </>
       ) : posts.length > 0 ? (
         posts.map((post) => (
-          <div key={post.id} className="w-full space-y-2">
+          <div key={post.id} className="w-full space-y-2 ">
             <img
               src={`https://picsum.photos/seed/${post.id}/600/300`}
               alt={post.title}
               className="w-full rounded-lg object-cover"
             />
 
-            <h3 className="text-lg font-semibold">{post.title}</h3>
+            <h3 className="text-lg font-semibold uppercase">{post.title}</h3>
 
             {/* Agora passa o autor completo e o id para o componente Author */}
             <Author id={post.userId} author={post.author} />
@@ -79,7 +84,7 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
           </div>
         ))
       ) : (
-        <p>Nenhum post encontrado.</p>
+        <p>Sorry. No post found with this tag.</p>
       )}
     </div>
   );
