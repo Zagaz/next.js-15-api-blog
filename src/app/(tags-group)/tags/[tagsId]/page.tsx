@@ -123,7 +123,7 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
 
         {!loading && (
         <>
-          <h3 className="text-base mb-6 text-gray-600">
+          <h3 className="text-base mt-8 mb-6 text-gray-600">
             {/* Fix - Instead of the length - show post.length * page */}
              These are the {skip + 1} to {skip + posts.length} of {total} posts with this tag.
           </h3>
