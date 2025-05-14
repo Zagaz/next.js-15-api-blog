@@ -26,6 +26,11 @@ type Post = {
   tags: string[];
   userId: number;
   views: number;
+  reactions: {
+    like: number;
+    comment: number;
+  }
+  
 };
 
 export default async function AuthorPage({ params }: { params: { authorId: string } }) {

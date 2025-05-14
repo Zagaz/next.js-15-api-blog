@@ -5,6 +5,7 @@ import Tags from '@/app/components/tags';
 import Author from '@/app/components/author';
 import Comments from '@/app/components/comments';
 import { BiLike } from "react-icons/bi";
+import { BiDislike } from "react-icons/bi";
 import Spinner from '@/app/components/spinner';
 import Link from 'next/link';
 
@@ -15,6 +16,11 @@ type ArticleData = {
   body: string;
   tags: string[];
   userId: number;
+  views: number;
+  reactions: {
+    likes: number;
+    dislikes: number;
+  };
 };
 
 type AuthorData = {
@@ -70,10 +76,10 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
   }, [articleId, limit]);
 
   if (!article || !author) {
-    return(
+    return (
 
       <div
-      className='flex justify-center items-center h-screen' 
+        className='flex justify-center items-center h-screen'
       ><Spinner /> </div>
     )
   }
@@ -82,36 +88,42 @@ export default function Article({ params }: { params: Promise<{ articleId: strin
   }
 
   return (
-   <div className="article-wrapper max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div className="article-content mb-6">
-  <img
-  src={`https://picsum.photos/seed/${article.id}/300/200`}
-  alt={article.title}
-  className="w-full rounded-lg object-cover"
-/>
+    <div className="article-wrapper max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="article-content mb-6">
+        <img
+          src={`https://picsum.photos/seed/${article.id}/300/200`}
+          alt={article.title}
+          className="w-full rounded-lg object-cover mb-4 "
+        />
 
-    <h1 className="text-3xl font-bold mb-4 uppercase">{article.title}</h1>
-    <p className="text-gray-700 leading-relaxed">{article.body}</p>
-  </div>
+        <h1 className="text-3xl font-bold mb-4 uppercase">{article.title}</h1>
+        <div className='likes-dislikesflex items-center justify-between mt-4 mb-4'>
+          <div className="flex w-full flex justify-end items-center gap-6">
+            <div className=' flex justify-start items-center gap-2 text-2xl '> <BiLike />{article.reactions.likes} </div>
+            <div className='flex justify-start items-center gap-2 text-2xl'><BiDislike />  {article.reactions.dislikes} </div>
+          </div>
+        </div>
+        <p className="text-gray-700 leading-relaxed">{article.body}</p>
+      </div>
 
-  <div className="article-tags mb-6">
-    <Tags post={{ tags: article.tags }} />
-  </div>
+      <div className="article-tags mb-6">
+        <Tags post={{ tags: article.tags }} />
+      </div>
 
-  <div className="article-author mb-8">
-    <Link href={`/author/${author.id}`}>
-    <Author author={author} id={author.id} />
-    </Link>
-  </div>
+      <div className="article-author mb-6">
+        <Link href={`/author/${author.id}`}>
+          <Author author={author} id={author.id} />
+        </Link>
+      </div>
 
-  <div className="article-comments">
-    <Comments
-      comments={comments?.comments || []}
-      total={comments?.total || 0}
-      onLoadMore={handleSkip}
-    />
-  </div>
-</div>
+      <div className="article-comments">
+        <Comments
+          comments={comments?.comments || []}
+          total={comments?.total || 0}
+          onLoadMore={handleSkip}
+        />
+      </div>
+    </div>
 
   );
 }
