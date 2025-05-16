@@ -46,9 +46,6 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
             return { ...post, author: authorData };
           })
         );
-
-
-
         setPosts(postsWithAuthors);
       } catch (error) {
         console.error('Erro ao buscar posts ou autores:', error);
@@ -56,14 +53,11 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
         setLoading(false);
       }
     }
-
     fetchPostsAndAuthors();
   }, [tagsId, skip]);
-
   function skipHandler() {
     setSkip(skip => skip + 6);
   }
-
   return (
     <div className="tag-wrapper w-full max-w-7xl mx-auto mt-10 px-4">
       <h2 className="text-2xl font-bold uppercase mb-2">Tag: {tagsId}</h2>
@@ -71,9 +65,8 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
         <>
           <h3 className="text-base mb-6 text-gray-600">
             {/* Fix - Instead of the length - show post.length * page */}
-             These are the {skip + 1} to {skip + posts.length} of {total} posts with this tag.
+            These are the {skip + 1} to {skip + posts.length} of {total} posts with this tag.
           </h3>
-
           <Pagination
             total={total}
             limit={6}
@@ -81,9 +74,7 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
             onPageChange={(newSkip) => setSkip(newSkip)}
           />
         </>
-
       )}
-
       {loading ? (
         <Spinner />
       ) : posts.length > 0 ? (
@@ -99,35 +90,24 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
                   />
                 </Link>
               </div>
-
               <Link href={`/article/${post.id}`} className="hover:text-blue-600 transition">
                 <h3 className="text-lg font-semibold uppercase">{post.title}</h3>
               </Link>
-
               <Author id={post.userId} author={post.author} />
-
               <p className="text-sm text-gray-700 line-clamp-2">{post.body}</p>
-
               <Tags post={post} />
-             
             </div>
-            
           ))}
-
-          
         </div>
       ) : (
         <p>Sorry. No post found with this tag.</p>
       )}
-
-
-        {!loading && (
+      {!loading && (
         <>
           <h3 className="text-base mt-8 mb-6 text-gray-600">
             {/* Fix - Instead of the length - show post.length * page */}
-             These are the {skip + 1} to {skip + posts.length} of {total} posts with this tag.
+            These are the {skip + 1} to {skip + posts.length} of {total} posts with this tag.
           </h3>
-
           <Pagination
             total={total}
             limit={6}
@@ -135,7 +115,6 @@ export default function TagsId({ params }: { params: { tagsId: string } }) {
             onPageChange={(newSkip) => setSkip(newSkip)}
           />
         </>
-
       )}
     </div>
   );

@@ -13,6 +13,7 @@ type BlogCard = {
   tags: string[];
   imageUrl: string;
   authorId: number;
+  body: string;
 };
 
 export default function CardsHome({ mainTitle }: CardsHomeProps) {
@@ -34,6 +35,7 @@ export default function CardsHome({ mainTitle }: CardsHomeProps) {
           authorId: post.userId,
           title: post.title,
           tags: post.tags,
+          body: post.body,
           imageUrl: `https://picsum.photos/seed/${post.id}/300/200`, // Mock image
         }));
         

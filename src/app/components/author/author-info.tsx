@@ -21,6 +21,7 @@ type AuthorInfoProps = {
 
 const AuthorInfo = ({ author }: AuthorInfoProps) => {
   return (
+    // Author Info 
     <div className="w-full max-w-4xl mx-auto bg-white rounded-xl p-8 shadow-md flex flex-col items-center text-center gap-4">
       <img
         src={author.image}

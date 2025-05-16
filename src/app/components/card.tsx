@@ -17,6 +17,7 @@ type CardProps = {
     title: string;
     tags: string[];
     imageUrl: string;
+    body: string;
   };
 };
 
@@ -34,20 +35,23 @@ export default function Card({ post }: CardProps) {
           id: data.id,
           firstName: data.firstName,
           lastName: data.lastName,
+    
         });
       } catch (error) {
         console.error("Error fetching author:", error);
         setAuthor(null);
       }
     }
+console.log("Post body:", post.body);
 
     fetchAuthor();
+
   }, [post.authorId]);
 
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
       {/* Image */}
-      <div className="relative w-full h-48">
+    <div className="relative w-full aspect-[16/9]">
         <img
           src={post.imageUrl}
           alt={post.title}
@@ -58,6 +62,10 @@ export default function Card({ post }: CardProps) {
 
       {/* Content */}
       <div className="p-4 flex-1 flex flex-col">
+        {/* Tags */}
+        <Tags post={{ tags: post.tags }} />
+
+      
         {author && (
           // Author component with full author data
           <Author author={author} id={author.id} />
@@ -70,18 +78,12 @@ export default function Card({ post }: CardProps) {
           </Link>
         </h2>
 
-        {/* Tags */}
-        <Tags post={{ tags: post.tags }} />
 
-        {/* Button */}
-        <div className="mt-auto">
-          <Link
-            href={`article/${post.id}`}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Read More
-          </Link>
-        </div>
+
+        {/* Description */}
+        <p className="text-gray-700 line-clamp-2">
+          {post.body}
+        </p>
       </div>
     </div>
   );

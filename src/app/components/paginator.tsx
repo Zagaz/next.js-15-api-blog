@@ -43,16 +43,15 @@ export default function Pagination({ total, limit, skip, onPageChange }: Paginat
           <button
             key={i}
             onClick={() => goToPage(i)}
-            className={`px-3 py-1 rounded ${
-              currentPage === i
+            className={`px-3 py-1 rounded ${currentPage === i
                 ? 'bg-blue-600 text-white' // Highlight the current page
                 : 'bg-gray-200 hover:bg-gray-300'
-            }`}
+              }`}
           >
             {i}
           </button>
         );
-      } 
+      }
       // Render ellipsis (...) to represent a skipped block of pages
       else if (
         (i === currentPage - 2 && currentPage > 4) ||

@@ -30,6 +30,7 @@ const AuthorPostList = ({ posts, author }: PostListProps) => {
               key={post.id}
               className="flex w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300 h-32"
             >
+              {/* Card */}
               <div className="flex flex-row w-full h-full no-underline">
                 <Link href={`/article/${post.id}`} className="h-full w-32 shrink-0">
                   {!post.id ? (
