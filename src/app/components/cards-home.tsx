@@ -55,14 +55,16 @@ export default function CardsHome({ mainTitle }: CardsHomeProps) {
   return (
     <>
     {
-      posts.length === 0 ? <> <Spinner/> </>:<>    <div className="p-4">
+      posts.length === 0 ? <> <Spinner/> </>:<>    
+      <div className="p-4 bg-zinc-200">
       <h3 className="text-2xl font-bold mb-6">{mainTitle}</h3>
       <div className="homecards-wrapper grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
           <Card key={post.id} post={post} />
         ))}
       </div>
-    </div></>
+    </div>
+    </>
     }
     
 
